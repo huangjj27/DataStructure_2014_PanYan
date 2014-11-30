@@ -21,22 +21,24 @@ void sort_branch(int nums[], int start, int end) {
   // |end|: the non-include end index of |nums|
 
   int lager_child;  // find the larger child and record the node
+  int root, temp;
 
   // from node(|root|)
   // each time we search the  lager child for the next step
   // loop until we have moved all larger child nodes to the upper node
-  for (int root = start, temp = nums[root];
-       2*root+1 < end;
+  for (root = start, temp = nums[root];
+       2 * root + 1 < end;
        root = lager_child) {
     lager_child = 2 * root + 1;  // first dim lager_child as the left child
     if (lager_child < end - 1 && nums[lager_child + 1] > nums[lager_child])
       lager_child++;
 
     if (temp < nums[lager_child])
-      swap(nums[root], nums[lager_child]);
+      nums[root]=nums[lager_child];
     else
       break;
   }
+  nums[root] = temp;
 }
 
 inline void print(int nums[], int start, int end) {
@@ -49,7 +51,7 @@ inline void print(int nums[], int start, int end) {
 }
 
 inline void heap_sort(int nums[], int start, int end) {
-  for (int i = end / 2 ; i >= start; i--) sort_branch(nums, i, end);
+  for (int i = end / 2; i >= start; i--) sort_branch(nums, i, end);
   print(nums, start, end);
 
   for (int j = end - 1; j > start; j--) {
@@ -68,6 +70,7 @@ int main() {
   while (scanf("%d", &n) != EOF) {
     for (int i = 0; i < n; i++) scanf("%d", &nums[i]);
 
+    // sort the array
     heap_sort(nums, 0, n);
   }
 
