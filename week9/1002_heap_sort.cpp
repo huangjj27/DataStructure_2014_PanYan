@@ -13,32 +13,29 @@ inline void swap(int& a, int& b) {
   b = temp;
 }
 
+inline void sort_branch(int nums[], int start, int end) {
+  // sorts a branch making the mininum in the brach to the leaf
+  // @Param |nums|: the data array regarded as a heap
+  // @|start|: the beginning index of |nums|
+  // @|end|: the non-include end index of |nums|
 
-void sort_branch(int nums[], int start, int end) {
-  // sort a branch into a reverse order
-  // |nums|: the data array
-  // |start|: the beginning index of |nums|
-  // |end|: the non-include end index of |nums|
-
-  int lager_child;  // find the larger child and record the node
-  int root, temp;
+  int larger_child;  // find the larger child and record the node
 
   // from node(|root|)
-  // each time we search the  lager child for the next step
+  // each time we search the larger child for the next step
   // loop until we have moved all larger child nodes to the upper node
-  for (root = start, temp = nums[root];
+  for (int root = start;
        2 * root + 1 < end;
-       root = lager_child) {
-    lager_child = 2 * root + 1;  // first dim lager_child as the left child
-    if (lager_child < end - 1 && nums[lager_child + 1] > nums[lager_child])
-      lager_child++;
+       root = larger_child) {
+    larger_child = 2 * root + 1;  // first dim larger_child as the left_child
+    if (larger_child < end - 1 && nums[larger_child + 1] > nums[larger_child])
+      larger_child++;
 
-    if (temp < nums[lager_child])
-      nums[root]=nums[lager_child];
+    if (nums[root] < nums[larger_child])
+      swap(nums[root], nums[larger_child]);
     else
       break;
   }
-  nums[root] = temp;
 }
 
 inline void print(int nums[], int start, int end) {
@@ -51,12 +48,24 @@ inline void print(int nums[], int start, int end) {
 }
 
 inline void heap_sort(int nums[], int start, int end) {
+  // sort with a maxinum heap.
+  // @Param |nums|: the data array regarded as a heap
+  // @|start|: the beginning index of |nums|
+  // @|end|: the non-include end index of |nums|
+
+  // build up a maxinum heap for the first time
   for (int i = end / 2; i >= start; i--) sort_branch(nums, i, end);
   print(nums, start, end);
 
+  // Now, the max number of |nums| between |start| and |end|-1 is |nums[start]|
+  // for we have built up a maxinum heap. Then swap it with the last number
+  // so the last number will be the largest.
+  // Then sort the branch from the root to find the next maxinum number and
+  // do the same again. Loop until there is only an element left, which means
+  // we have sorted all elements
   for (int j = end - 1; j > start; j--) {
     swap(nums[0], nums[j]);
-    sort_branch(nums, start, j);  // build a maxinum_heap between 0 and j-1;
+    sort_branch(nums, start, j);
 
     // outputs data eachtime we build a maxinum heap
     print(nums, start, end);
