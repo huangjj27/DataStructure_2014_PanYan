@@ -1,6 +1,6 @@
 // Copyright (c) 2014 Junjie_Huang@SYSU(SNO:13331087). All Rights Reserved.
-// week9/1003_sets.cpp: DataStructure2014@PanYan
-// http://soj.sysu.edu.cn/show_problem.php?pid=1003&cid=1602
+// week9/1004_max_k_numbers.cpp: DataStructure2014@PanYan
+// http://soj.sysu.edu.cn/show_problem.php?pid=1004&cid=1602
 #include <cstdio>
 
 #define MAX_SIZE 1000000
